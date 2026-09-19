@@ -29,12 +29,17 @@ Move the trip tracking app to offline-first with **Firestore native offline pers
 - Migrating existing localStorage data into Firestore (fresh start; cloud is the source of truth).
 
 ## Task checklist
-- [ ] T1 Update ODD feature doc + Engram mirror (parent)
-- [ ] T2 Delegate implementation writer (data layer + UI) — delegated direct
-- [ ] T3 Verify: `npm run build` + `npm run lint` exit 0
-- [ ] T4 Commit work unit + push to `cantera-app`
-- [ ] T5 Firestore deploy (hosting + rules unchanged) + smoke check HTTP 200
-- [ ] T6 Update memory
+- [x] T1 Update ODD feature doc + Engram mirror (parent)
+- [x] T2 Delegate implementation writer (data layer + UI) — delegated direct
+- [x] T3 Verify: `npm run build` + `npm run lint` exit 0
+- [x] T4 Commit work unit + push to `cantera-app`
+- [x] T5 Firebase deploy (hosting) + smoke check HTTP 200 + theme-color present
+- [x] T6 Update memory
+
+## Notes / deviations (accepted)
+- Admin password moved to `VITE_ADMIN_PASSWORD` env (only in local `.env`, gitignored; `.env.example` has placeholder). Still client-side exposure (VITE_* is inlined into the bundle) — real hardening remains the Auth + rules follow-up.
+- `.firebase/` CLI cache accidentally committed once, removed and gitignored.
+- Fresh clones need `VITE_ADMIN_PASSWORD` set or the admin gate rejects all inputs (secure-by-default lockout).
 
 ## Verification evidence
 - TBD
