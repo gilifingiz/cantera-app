@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// DEVELOPMENT MODE: open read/write on the viajes collection so the app works
+// without authentication, mirroring the original localStorage behavior.
+// Follow-up: add Firebase Authentication and restrict writes to authenticated
+// users before relying on these rules for real data.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /viajes/{viajeId} {
+      allow read, write: if true;
+    }
+  }
+}

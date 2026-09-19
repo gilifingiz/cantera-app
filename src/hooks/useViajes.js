@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { isRealtimeEnabled } from '../firebase.js'
+import { isFirestoreEnabled } from '../firebase.js'
 import {
   loadViajes,
   removeAll,
@@ -9,17 +9,18 @@ import {
   writeViaje,
 } from '../services/viajesService.js'
 
-export function useViajes(isAdmin = false) {
+export function useViajes() {
   // Local state is the single source of truth; localStorage is the cache.
   const [viajes, setViajes] = useState(() => loadViajes())
 
-  // Live sync for admins: the RTDB listener refreshes local state, exactly
-  // like the original `escucharFirebase()` admin listener.
+  // Live sync for every role: since Firestore acts as the mandatory cloud
+  // backend, the listener refreshes local state whenever it is enabled,
+  // exactly like the original `escucharFirebase()` admin listener.
   useEffect(() => {
-    if (!isRealtimeEnabled || !isAdmin) return
+    if (!isFirestoreEnabled) return
     const unsubscribe = subscribeViajes(setViajes)
     return unsubscribe
-  }, [isAdmin])
+  }, [])
 
   const addViaje = useCallback(
     (viaje) => {
@@ -47,5 +48,5 @@ export function useViajes(isAdmin = false) {
     removeAll()
   }, [])
 
-  return { viajes, addViaje, marcarLlegada, borrarTodo, isRealtimeEnabled }
+  return { viajes, addViaje, marcarLlegada, borrarTodo, isFirestoreEnabled }
 }

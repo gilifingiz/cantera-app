@@ -6,7 +6,7 @@ import { useViajes } from './hooks/useViajes.js'
 
 export default function App() {
   const [rol, setRol] = useState(null)
-  const { viajes, addViaje, marcarLlegada, borrarTodo } = useViajes(rol === 'admin')
+  const { viajes, addViaje, marcarLlegada, borrarTodo } = useViajes()
 
   function cambiarRol() {
     setRol(null)
