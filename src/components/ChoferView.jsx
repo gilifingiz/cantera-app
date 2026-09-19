@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { normalizeName } from '../hooks/useViajes.js'
-import SyncBadge from './SyncBadge.jsx'
 
 const MATERIALES = ['Arena', 'Piedra', 'Base Granular']
 const MI_NOMBRE_KEY = 'miNombre'
@@ -100,7 +99,6 @@ export default function ChoferView({ viajes, addViaje, marcarLlegada }) {
   if (viajes === null) {
     return (
       <>
-        <SyncBadge />
         <div className="card">
           <p className="estado">Cargando…</p>
         </div>
@@ -113,7 +111,6 @@ export default function ChoferView({ viajes, addViaje, marcarLlegada }) {
 
   return (
     <>
-      <SyncBadge />
       <div className="card">
         <h3>👷 Carga de viaje</h3>
         <form onSubmit={handleSubmit} noValidate>
