@@ -1,51 +1,45 @@
 import { useCallback, useEffect, useState } from 'react'
 import { isFirestoreEnabled } from '../firebase.js'
-import {
-  loadViajes,
-  removeAll,
-  saveViajes,
-  subscribeViajes,
-  updateLlegada,
-  writeViaje,
-} from '../services/viajesService.js'
+import { removeAll, subscribeViajes, updateLlegada, writeViaje } from '../services/viajesService.js'
+import { markSyncPending } from './useSyncStatus.js'
+
+// Normalizes a driver name so "Juan" and "juan" match for active-trip
+// detection. Trim + lowercase with Spanish locale.
+export function normalizeName(s) {
+  return (s || '').trim().toLocaleLowerCase('es')
+}
 
 export function useViajes() {
-  // Local state is the single source of truth; localStorage is the cache.
-  const [viajes, setViajes] = useState(() => loadViajes())
+  // null = loading until the first snapshot lands (cache-first);
+  // [] = local-only mode, no persistence layer.
+  const [viajes, setViajes] = useState(() => (isFirestoreEnabled ? null : []))
 
-  // Live sync for every role: since Firestore acts as the mandatory cloud
-  // backend, the listener refreshes local state whenever it is enabled,
-  // exactly like the original `escucharFirebase()` admin listener.
   useEffect(() => {
     if (!isFirestoreEnabled) return
     const unsubscribe = subscribeViajes(setViajes)
     return unsubscribe
   }, [])
 
-  const addViaje = useCallback(
-    (viaje) => {
-      const next = [viaje, ...viajes]
-      setViajes(next)
-      saveViajes(next)
-      writeViaje(viaje)
-    },
-    [viajes],
-  )
+  // Optimistic in-memory mutations; Firestore (with its offline write queue)
+  // is the persistence layer and keeps every other open tab in sync.
+  const addViaje = useCallback((viaje) => {
+    markSyncPending()
+    setViajes((prev) => [viaje, ...(prev ?? [])])
+    writeViaje(viaje)
+  }, [])
 
-  const marcarLlegada = useCallback(
-    (id, hora) => {
-      const next = viajes.map((v) => (v.id === id ? { ...v, horaLlegada: hora } : v))
-      setViajes(next)
-      saveViajes(next)
-      updateLlegada(id, hora)
-    },
-    [viajes],
-  )
+  const marcarLlegada = useCallback((id, hora) => {
+    markSyncPending()
+    setViajes((prev) =>
+      (prev ?? []).map((v) => (v.id === id ? { ...v, horaLlegada: hora } : v)),
+    )
+    updateLlegada(id, hora)
+  }, [])
 
   const borrarTodo = useCallback(() => {
+    markSyncPending()
     setViajes([])
-    saveViajes([])
-    removeAll()
+    removeAll().catch((err) => console.warn('[viajes] removeAll failed', err))
   }, [])
 
   return { viajes, addViaje, marcarLlegada, borrarTodo, isFirestoreEnabled }

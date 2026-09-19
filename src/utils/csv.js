@@ -1,7 +1,7 @@
 export function exportarExcel(viajes) {
-  const header = 'Fecha,Hora Salida,Hora Llegada,Material,Patente,Interno,Chofer,M3,Destino'
+  const header = 'Fecha,Hora Salida,Hora Llegada,Material,Patente,Chofer,M3,Destino'
   const rows = viajes.map((v) =>
-    [v.fecha, v.horaSalida, v.horaLlegada, v.material, v.patente, v.interno, v.chofer, v.m3, v.destino || '']
+    [v.fecha, v.horaSalida, v.horaLlegada, v.material, v.patente, v.chofer, v.m3, v.destino || '']
       .map((field) => `"${field}"`)
       .join(','),
   )

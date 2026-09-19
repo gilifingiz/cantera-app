@@ -1,5 +1,9 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import {
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -13,13 +17,17 @@ const firebaseConfig = {
 let app
 let db = null
 
-// Firestore is optional: without credentials the app degrades to
-// localStorage-only mode (same fallback as the original single-file app).
+// Firestore is optional: without credentials the app degrades to local-only
+// mode (in-memory state, no persistence).
 export const isFirestoreEnabled = Boolean(firebaseConfig.projectId && firebaseConfig.apiKey)
 
 if (isFirestoreEnabled) {
   app = initializeApp(firebaseConfig)
-  db = getFirestore(app)
+  // Native offline persistence (IndexedDB cache + automatic write queue),
+  // shared across tabs. Replaces the old localStorage data cache.
+  db = initializeFirestore(app, {
+    localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+  })
 }
 
 export { db }

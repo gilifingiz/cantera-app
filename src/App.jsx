@@ -14,18 +14,28 @@ export default function App() {
 
   if (rol === 'chofer') {
     return (
-      <ChoferView
-        viajes={viajes}
-        addViaje={addViaje}
-        marcarLlegada={marcarLlegada}
-        onCambiarRol={cambiarRol}
-      />
+      <main>
+        <ChoferView
+          viajes={viajes}
+          addViaje={addViaje}
+          marcarLlegada={marcarLlegada}
+          onCambiarRol={cambiarRol}
+        />
+      </main>
     )
   }
 
   if (rol === 'admin') {
-    return <AdminView viajes={viajes} borrarTodo={borrarTodo} onCambiarRol={cambiarRol} />
+    return (
+      <main className="main-admin">
+        <AdminView viajes={viajes} borrarTodo={borrarTodo} onCambiarRol={cambiarRol} />
+      </main>
+    )
   }
 
-  return <Login onSelect={setRol} />
+  return (
+    <main>
+      <Login onSelect={setRol} />
+    </main>
+  )
 }

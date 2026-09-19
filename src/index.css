@@ -1,122 +1,457 @@
-/* Look & feel ported from the original app (pagina.html) */
-body {
-  font-family: sans-serif;
-  background: #838181;
-  margin: 0;
-  padding: 12px;
+/* ============================================================
+   Cantera A — design system (mobile-first, no frameworks)
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+  --bg: #f4f1ec;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e0d8;
+  --primary: #22303f;
+  --primary-text: #ffffff;
+  --accent: #d97706;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #dc2626;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(30, 25, 18, 0.06), 0 10px 28px rgba(30, 25, 18, 0.09);
+  --space: 16px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --primary-soft: #eef1f5;
+  --success-soft: #ecfdf5;
+  --warning-soft: #fffbeb;
+  --danger-soft: #fef2f2;
+  --ring: rgba(34, 48, 63, 0.28);
 }
 
-.card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 10px rgba(160, 12, 12, 0.863);
-}
-
-input,
-select,
-button {
-  width: 100%;
-  padding: 14px;
-  margin: 6px 0;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 17px;
+* {
   box-sizing: border-box;
 }
 
-button {
-  background: #111;
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Layout ---------- */
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+main.main-admin {
+  max-width: 860px;
+}
+
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- App hero (identity) ---------- */
+
+.hero {
+  background: linear-gradient(150deg, #1c2733 0%, #33475c 62%, #3d556e 100%);
   color: #fff;
-  font-weight: bold;
   border: none;
+  text-align: center;
+  padding: 36px 20px 28px;
+}
+
+.hero h1 {
+  margin: 0 0 4px;
+  font-size: 30px;
+  letter-spacing: 0.01em;
+}
+
+.hero-sub {
+  margin: 0 0 16px;
+  color: #dbe3ec;
+  font-size: 15px;
+}
+
+.hero .muted {
+  color: #c7d2de;
+  margin-bottom: 14px;
+}
+
+.hero button {
+  background: #eab308;
+  color: #1f2937;
+  border: none;
+}
+
+.hero button:hover {
+  background: #f0c33c;
+}
+
+.hero button.sec {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.hero button.sec:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- Forms ---------- */
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+input,
+select {
+  font-family: inherit;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 17px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  appearance: none;
+}
+
+select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 2px var(--ring);
+}
+
+input[aria-invalid='true'],
+select[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+input[aria-invalid='true']:focus-visible,
+select[aria-invalid='true']:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(220, 38, 38, 0.3);
+}
+
+/* ---------- Buttons ---------- */
+
+button {
+  font-family: inherit;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary-text);
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.06s ease;
+}
+
+button:hover {
+  background: #2c3e52;
+}
+
+button:active {
+  transform: scale(0.985);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 button.sec {
-  background: #e5e5e5;
-  color: #111;
+  background: #ece8e1;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+button.sec:hover {
+  background: #e2ddd4;
+}
+
+button.danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid #f0c4c4;
+}
+
+button.danger:hover {
+  background: #fde5e5;
 }
 
 .btn-llegada {
-  background: green;
-}
-
-.hidden {
-  display: none;
-}
-
-.big {
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.stat {
-  background: #111;
+  background: var(--success);
   color: #fff;
-  padding: 14px;
+}
+
+.btn-llegada:hover {
+  background: #166534;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* ---------- Status message ---------- */
+
+.msg {
+  color: var(--success);
+  font-weight: 700;
+  margin: 14px 0 0;
+}
+
+/* ---------- Active trip block ---------- */
+
+.en-curso {
+  background: var(--success-soft);
+  border: 2px solid var(--success);
   border-radius: 12px;
+  padding: 14px;
   text-align: center;
 }
 
-.stat b {
-  font-size: 26px;
-  display: block;
+.en-curso p {
+  margin: 4px 0;
+}
+
+.viaje-activo {
+  font-weight: 700;
+}
+
+.en-curso .btn-llegada {
+  margin-top: 10px;
+}
+
+/* ---------- Inline validation / states ---------- */
+
+.field-error {
+  margin: 6px 2px 0;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.estado {
+  margin: 8px 0;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- Sync badge ---------- */
+
+.sync-badge {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: 0 1px 2px rgba(30, 25, 18, 0.06);
+  white-space: nowrap;
+}
+
+.sync-local {
+  color: var(--muted);
+  background: #f3f1ed;
+}
+
+.sync-synced {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: #a7e0bc;
+}
+
+.sync-syncing {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: #f6cd77;
+}
+
+.sync-offline {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: #f5b8b8;
+}
+
+/* ---------- Tables ---------- */
+
+.table-wrap {
+  margin-top: 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
   width: 100%;
-  font-size: 13px;
+  font-size: 14px;
   border-collapse: collapse;
 }
 
 th,
 td {
-  padding: 8px;
-  border-bottom: 1px solid #524e4e;
+  padding: 10px 8px;
   text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
 }
 
+th {
+  background: #f7f4ef;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Stat tiles ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat {
+  background: var(--primary);
+  color: #fff;
+  padding: 18px 12px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.stat b {
+  display: block;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #c7d2de;
+}
+
+/* ---------- Headings ---------- */
+
+h1,
 h2,
 h3,
 h4 {
-  margin: 4px 0 8px;
+  margin: 4px 0 10px;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  margin-top: 0;
+  font-size: 15px;
 }
 
 p {
   margin: 6px 0;
 }
 
-.msg {
-  color: green;
-  font-weight: bold;
-}
+/* ---------- Responsive (tablet and up) ---------- */
 
-.en-curso {
-  background: #e8ffe8;
-  padding: 12px;
-  border-radius: 10px;
-  border: 2px solid green;
-}
+@media (min-width: 640px) {
+  main {
+    padding: 24px var(--space);
+  }
 
-.en-curso p {
-  margin: 5px;
-  text-align: center;
-}
+  button {
+    width: auto;
+    display: inline-flex;
+  }
 
-.viaje-activo {
-  text-align: center;
-  font-weight: bold;
-}
+  .card {
+    padding: 24px;
+  }
 
-.admin-content {
-  margin-top: 12px;
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .grid {
+    gap: 14px;
+  }
 }
