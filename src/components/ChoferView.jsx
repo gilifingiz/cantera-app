@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { normalizeName } from '../hooks/useViajes.js'
 
 const MATERIALES = ['Arena', 'Piedra', 'Base Granular']
-const MI_NOMBRE_KEY = 'miNombre'
 
 export default function ChoferView({ viajes, addViaje, marcarLlegada }) {
   const navigate = useNavigate()
-  const [nombre, setNombre] = useState(() => localStorage.getItem(MI_NOMBRE_KEY) || '')
+  const [nombre, setNombre] = useState('')
   const [material, setMaterial] = useState('')
   const [patente, setPatente] = useState('')
   const [m3, setM3] = useState('')
@@ -65,7 +64,6 @@ export default function ChoferView({ viajes, addViaje, marcarLlegada }) {
       refMap[firstInvalid].current?.focus()
       return
     }
-    localStorage.setItem(MI_NOMBRE_KEY, nombre)
     const viaje = {
       id: Date.now(),
       fecha: new Date().toLocaleDateString('es-AR'),
