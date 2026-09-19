@@ -29,10 +29,10 @@ Pedido explícito del usuario: "la aplicación no tiene rutas... quiero que cree
 
 ## Tareas
 
-- [ ] T1: Instalar react-router-dom y envolver la app con BrowserRouter en main.jsx
-- [ ] T2: Definir <Routes> en App (/, /chofer, /admin, *) con datos compartidos
-- [ ] T3: Login navega a /chofer o /admin; quitar stats + SyncBadge + nota del cartel (dejar hero, tagline, botones, centrado)
-- [ ] T4: "Cambiar rol" en ChoferView y AdminView navega a /
+- [x] T1: Instalar react-router-dom y envolver la app con BrowserRouter en main.jsx
+- [x] T2: Definir <Routes> en App (/, /chofer, /admin, *) con datos compartidos
+- [x] T3: Login navega a /chofer o /admin; quitar stats + SyncBadge + nota del cartel (dejar hero, tagline, botones, centrado)
+- [x] T4: "Cambiar rol" en ChoferView y AdminView navega a /
 
 ## Checks
 
