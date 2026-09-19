@@ -1,0 +1,122 @@
+/* Look & feel ported from the original app (pagina.html) */
+body {
+  font-family: sans-serif;
+  background: #838181;
+  margin: 0;
+  padding: 12px;
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(160, 12, 12, 0.863);
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 14px;
+  margin: 6px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+button.sec {
+  background: #e5e5e5;
+  color: #111;
+}
+
+.btn-llegada {
+  background: green;
+}
+
+.hidden {
+  display: none;
+}
+
+.big {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat {
+  background: #111;
+  color: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat b {
+  font-size: 26px;
+  display: block;
+}
+
+table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #524e4e;
+  text-align: left;
+}
+
+h2,
+h3,
+h4 {
+  margin: 4px 0 8px;
+}
+
+p {
+  margin: 6px 0;
+}
+
+.msg {
+  color: green;
+  font-weight: bold;
+}
+
+.en-curso {
+  background: #e8ffe8;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid green;
+}
+
+.en-curso p {
+  margin: 5px;
+  text-align: center;
+}
+
+.viaje-activo {
+  text-align: center;
+  font-weight: bold;
+}
+
+.admin-content {
+  margin-top: 12px;
+}
