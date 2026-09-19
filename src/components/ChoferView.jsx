@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { normalizeName } from '../hooks/useViajes.js'
 import SyncBadge from './SyncBadge.jsx'
 
 const MATERIALES = ['Arena', 'Piedra', 'Base Granular']
 const MI_NOMBRE_KEY = 'miNombre'
 
-export default function ChoferView({ viajes, addViaje, marcarLlegada, onCambiarRol }) {
+export default function ChoferView({ viajes, addViaje, marcarLlegada }) {
+  const navigate = useNavigate()
   const [nombre, setNombre] = useState(() => localStorage.getItem(MI_NOMBRE_KEY) || '')
   const [material, setMaterial] = useState('')
   const [patente, setPatente] = useState('')
@@ -102,7 +104,7 @@ export default function ChoferView({ viajes, addViaje, marcarLlegada, onCambiarR
         <div className="card">
           <p className="estado">Cargando…</p>
         </div>
-        <button type="button" className="sec" onClick={onCambiarRol}>
+        <button type="button" className="sec" onClick={() => navigate('/')}>
           Cambiar rol
         </button>
       </>
@@ -273,7 +275,7 @@ export default function ChoferView({ viajes, addViaje, marcarLlegada, onCambiarR
         )}
       </div>
 
-      <button type="button" className="sec" onClick={onCambiarRol}>
+      <button type="button" className="sec" onClick={() => navigate('/')}>
         Cambiar rol
       </button>
     </>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { exportarExcel } from '../utils/csv.js'
 import SyncBadge from './SyncBadge.jsx'
 
@@ -7,7 +8,8 @@ import SyncBadge from './SyncBadge.jsx'
 // follow-up (Firebase Auth) — this is a UX gate, not security.
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 
-export default function AdminView({ viajes, borrarTodo, onCambiarRol }) {
+export default function AdminView({ viajes, borrarTodo }) {
+  const navigate = useNavigate()
   const [clave, setClave] = useState('')
   const [autenticado, setAutenticado] = useState(false)
   const [errorClave, setErrorClave] = useState(false)
@@ -96,7 +98,7 @@ export default function AdminView({ viajes, borrarTodo, onCambiarRol }) {
           <div className="card">
             <p className="estado">Cargando…</p>
           </div>
-          <button type="button" className="sec" onClick={onCambiarRol}>
+          <button type="button" className="sec" onClick={() => navigate('/')}>
             Cambiar rol
           </button>
         </>
@@ -215,7 +217,7 @@ export default function AdminView({ viajes, borrarTodo, onCambiarRol }) {
             </>
           )}
 
-          <button type="button" className="sec" onClick={onCambiarRol}>
+          <button type="button" className="sec" onClick={() => navigate('/')}>
             Cambiar rol
           </button>
         </>
