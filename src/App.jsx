@@ -34,8 +34,8 @@ export default function App() {
   }
 
   return (
-    <main>
-      <Login onSelect={setRol} />
+    <main className="main-login">
+      <Login onSelect={setRol} viajes={viajes} />
     </main>
   )
 }

@@ -24,6 +24,9 @@
   --warning-soft: #fffbeb;
   --danger-soft: #fef2f2;
   --ring: rgba(34, 48, 63, 0.28);
+  --hero-gradient: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  --hero-text: #1c2733;
+  --hero-soft: rgba(28, 39, 51, 0.72);
 }
 
 * {
@@ -39,7 +42,9 @@ body {
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.45;
-  background: var(--bg);
+  /* Soft warm wash so the page never reads as blank; cards stay white. */
+  background-color: var(--bg);
+  background-image: linear-gradient(180deg, #f7f2e9 0%, #efe9dd 100%);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
@@ -59,6 +64,12 @@ main.main-admin {
   max-width: 860px;
 }
 
+main.main-login {
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 .admin-content {
   display: flex;
   flex-direction: column;
@@ -75,51 +86,105 @@ main.main-admin {
   box-shadow: var(--shadow);
 }
 
-/* ---------- App hero (identity) ---------- */
+/* ---------- Login: cantera hero ("cartel") ---------- */
 
-.hero {
-  background: linear-gradient(150deg, #1c2733 0%, #33475c 62%, #3d556e 100%);
-  color: #fff;
+.hero-cantera {
+  background: var(--hero-gradient);
+  color: var(--hero-text);
   border: none;
   text-align: center;
-  padding: 36px 20px 28px;
+  border-radius: 22px;
+  padding: 42px 20px 30px;
 }
 
-.hero h1 {
-  margin: 0 0 4px;
-  font-size: 30px;
+.hero-glyph {
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 10px rgba(28, 39, 51, 0.22));
+}
+
+.hero-cantera h1 {
+  margin: 0 0 6px;
+  font-size: 32px;
   letter-spacing: 0.01em;
+  color: var(--hero-text);
 }
 
-.hero-sub {
-  margin: 0 0 16px;
-  color: #dbe3ec;
+.hero-cantera .hero-sub {
+  margin: 0 0 14px;
+  color: var(--hero-soft);
   font-size: 15px;
 }
 
-.hero .muted {
-  color: #c7d2de;
+.hero-underline {
+  display: block;
+  width: 52px;
+  height: 4px;
+  margin: 0 auto 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 3px rgba(28, 39, 51, 0.18);
+}
+
+/* Live stats strip: translucent white tiles over the hero gradient. */
+.stats {
+  margin: 2px 0 22px;
+}
+
+.hero-cantera .stat {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--hero-text);
+  box-shadow: 0 2px 10px rgba(124, 45, 18, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+.hero-cantera .stat-label {
+  color: var(--hero-text);
+  opacity: 0.7;
+}
+
+.hero-cantera .muted {
+  color: var(--hero-soft);
+  font-weight: 600;
   margin-bottom: 14px;
 }
 
-.hero button {
-  background: #eab308;
-  color: #1f2937;
-  border: none;
+.hero-cantera button {
+  background: var(--hero-text);
 }
 
-.hero button:hover {
-  background: #f0c33c;
+.hero-cantera button:hover {
+  background: #2c3e52;
 }
 
-.hero button.sec {
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.32);
+.hero-cantera button.sec {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--hero-text);
+  border: 1px solid rgba(28, 39, 51, 0.14);
 }
 
-.hero button.sec:hover {
-  background: rgba(255, 255, 255, 0.22);
+.hero-cantera button.sec:hover {
+  background: #ffffff;
+}
+
+.hero-cantera button:focus-visible {
+  outline-color: var(--hero-text);
+}
+
+/* Sync note under the role buttons. */
+.login-footer {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-sync-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--hero-soft);
 }
 
 /* ---------- Forms ---------- */
@@ -453,5 +518,17 @@ p {
 
   .grid {
     gap: 14px;
+  }
+
+  main.main-login {
+    justify-content: center;
+  }
+
+  .main-login .actions {
+    justify-content: center;
+  }
+
+  .hero-cantera {
+    padding: 48px 28px 34px;
   }
 }
