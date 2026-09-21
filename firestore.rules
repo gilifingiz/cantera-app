@@ -1,13 +1,16 @@
 rules_version = '2';
 
-// DEVELOPMENT MODE: open read/write on the viajes collection so the app works
-// without authentication, mirroring the original localStorage behavior.
-// Follow-up: add Firebase Authentication and restrict writes to authenticated
-// users before relying on these rules for real data.
+// Drivers work WITHOUT an account (they scan in and record trips on shared
+// devices), so reads/creates/updates stay open for the viajes collection.
+// Deleting trips is admin-only: requires a signed-in user whose email is on
+// the admin allowlist below. Update the allowlist and redeploy when the
+// admin account changes.
 service cloud.firestore {
   match /databases/{database}/documents {
     match /viajes/{viajeId} {
-      allow read, write: if true;
+      allow read, create, update: if true;
+      allow delete: if request.auth != null
+        && request.auth.token.email == 'ADMIN_EMAIL_PLACEHOLDER';
     }
   }
 }

@@ -1,59 +1,106 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { exportarExcel } from '../utils/csv.js'
+import {
+  authErrorMessage,
+  loginAdmin,
+  logoutAdmin,
+  useAdminAuth,
+} from '../services/auth.js'
 import SyncBadge from './SyncBadge.jsx'
-
-// Client-side gate. The shared secret lives in the environment
-// (VITE_ADMIN_PASSWORD), never in source code or UI copy. Real auth is a
-// follow-up (Firebase Auth) — this is a UX gate, not security.
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
 
 export default function AdminView({ viajes, borrarTodo }) {
   const navigate = useNavigate()
+  const { checking, user } = useAdminAuth()
+  const [email, setEmail] = useState('')
   const [clave, setClave] = useState('')
-  const [autenticado, setAutenticado] = useState(false)
-  const [errorClave, setErrorClave] = useState(false)
+  const [loginError, setLoginError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  function handleEntrar(e) {
+  async function handleEntrar(e) {
     e.preventDefault()
-    if (clave === ADMIN_PASSWORD) {
-      setAutenticado(true)
-      setErrorClave(false)
-    } else {
-      setErrorClave(true)
+    setBusy(true)
+    setLoginError('')
+    try {
+      await loginAdmin(email, clave)
+      setClave('')
+    } catch (err) {
+      setLoginError(authErrorMessage(err.code))
+    } finally {
+      setBusy(false)
     }
   }
 
-  if (!autenticado) {
+  function cerrarSesion() {
+    logoutAdmin()
+  }
+
+  if (checking) {
     return (
-      <div className="card">
-        <h3>🔐 Panel Admin</h3>
-        <form onSubmit={handleEntrar}>
-          <div className="field">
-            <label htmlFor="clave">Clave</label>
-            <input
-              id="clave"
-              type="password"
-              value={clave}
-              onChange={(e) => {
-                setClave(e.target.value)
-                setErrorClave(false)
-              }}
-              placeholder="Clave"
-              autoComplete="current-password"
-              autoFocus
-              aria-invalid={errorClave}
-              aria-describedby={errorClave ? 'err-clave' : undefined}
-            />
-            {errorClave && (
-              <p className="field-error" id="err-clave" role="alert">
-                Clave incorrecta.
-              </p>
-            )}
-          </div>
-          <button type="submit">ENTRAR</button>
-        </form>
-      </div>
+      <>
+        <div className="card">
+          <p className="estado">Cargando…</p>
+        </div>
+        <button type="button" className="sec" onClick={() => navigate('/')}>
+          Cambiar rol
+        </button>
+      </>
+    )
+  }
+
+  if (!user) {
+    return (
+      <>
+        <div className="card">
+          <h3>🔐 Panel Admin</h3>
+          <form onSubmit={handleEntrar} noValidate>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  setLoginError('')
+                }}
+                placeholder="admin@cantera.com.ar"
+                autoComplete="email"
+                autoFocus
+                aria-invalid={Boolean(loginError)}
+                aria-describedby={loginError ? 'err-login' : undefined}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="clave">Contraseña</label>
+              <input
+                id="clave"
+                type="password"
+                value={clave}
+                onChange={(e) => {
+                  setClave(e.target.value)
+                  setLoginError('')
+                }}
+                placeholder="Contraseña"
+                autoComplete="current-password"
+                aria-invalid={Boolean(loginError)}
+                aria-describedby={loginError ? 'err-login' : undefined}
+              />
+              {loginError && (
+                <p className="field-error" id="err-login" role="alert">
+                  {loginError}
+                </p>
+              )}
+            </div>
+            <button type="submit" disabled={busy}>
+              {busy ? 'ENTRANDO…' : 'ENTRAR'}
+            </button>
+          </form>
+        </div>
+        <button type="button" className="sec" onClick={() => navigate('/')}>
+          Cambiar rol
+        </button>
+      </>
     )
   }
 
@@ -217,9 +264,14 @@ export default function AdminView({ viajes, borrarTodo }) {
             </>
           )}
 
-          <button type="button" className="sec" onClick={() => navigate('/')}>
-            Cambiar rol
-          </button>
+          <div className="actions">
+            <button type="button" className="sec" onClick={cerrarSesion}>
+              Cerrar sesión
+            </button>
+            <button type="button" className="sec" onClick={() => navigate('/')}>
+              Cambiar rol
+            </button>
+          </div>
         </>
       )}
     </div>
