@@ -29,10 +29,10 @@ Pedido explícito del usuario, opción 1 elegida: solo los admins tienen cuenta.
 
 ## Tareas
 
-- [ ] T1: Servicio auth + hook useAdminAuth (src/services/auth.js, export auth en firebase.js)
-- [ ] T2: AdminView con gate de sesión: login email+clave, errores, cerrar sesión; quitar clave vieja
-- [ ] T3: Reglas Firestore delete admin-only (allowlist de email) + borrar VITE_ADMIN_PASSWORD de .env/.env.example
-- [ ] T4: Activar proveedor Email/Contraseña en consola; crear cuenta admin; deploy rules + hosting; verificación en vivo
+- [x] T1: Servicio auth + hook useAdminAuth (src/services/auth.js, export auth en firebase.js)
+- [x] T2: AdminView con gate de sesión: login email+clave, errores, cerrar sesión; quitar clave vieja
+- [x] T3: Reglas Firestore delete admin-only (allowlist de email) + borrar VITE_ADMIN_PASSWORD de .env/.env.example
+- [x] T4: Activar proveedor Email/Contraseña en consola; crear cuenta admin; deploy rules + hosting; verificación en vivo
 
 ## Checks
 

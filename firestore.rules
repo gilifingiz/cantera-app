@@ -10,7 +10,7 @@ service cloud.firestore {
     match /viajes/{viajeId} {
       allow read, create, update: if true;
       allow delete: if request.auth != null
-        && request.auth.token.email == 'ADMIN_EMAIL_PLACEHOLDER';
+        && request.auth.token.email == 'giuli10.carte@gmail.com';
     }
   }
 }
