@@ -234,6 +234,7 @@ export default function AdminView({ viajes, borrarTodo }) {
                         <th>Mat</th>
                         <th>Patente</th>
                         <th>M³</th>
+                        <th>Destino</th>
                         <th>Chofer</th>
                         <th>Llegada</th>
                       </tr>
@@ -245,6 +246,7 @@ export default function AdminView({ viajes, borrarTodo }) {
                           <td>{v.material}</td>
                           <td>{v.patente}</td>
                           <td>{v.m3}</td>
+                          <td>{v.destino || '—'}</td>
                           <td>{v.chofer}</td>
                           <td>{v.horaLlegada ? `✅ ${v.horaLlegada}` : 'En viaje...'}</td>
                         </tr>
